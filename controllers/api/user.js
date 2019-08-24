@@ -7,14 +7,14 @@ const User = require('../../models/User');
 
 // register
 // path - /api/user/register
-router.post('/register', jwtVerification, async (request, response) => {
+router.post('/register', async (request, response) => {
   // request data
   const { first_name, last_name, email, password } = request.body;
-  console.log('hit register');
-  // // check for existing user with email
-  // const existingUser = await User.findOne(email);
-  // // if user exists, stop registration, notify user of error
-  // if (existingUser.length) return response.status(422).send('Error: user already exists');
+
+  // check for existing user with email
+  const existingUser = await User.findOne(email);
+  // if user exists, stop registration, notify user of error
+  if (existingUser.length) return response.status(422).send('Error: user already exists');
 
   // create salt & hash password
   const salt = await bcrypt.genSalt(10);
@@ -40,8 +40,31 @@ router.post('/register', jwtVerification, async (request, response) => {
 });
 
 // path - /api/user/login
-router.post('/login', (request, response) => {
-  response.send('You hit the login route');
+router.post('/login', async (request, response) => {
+  // request data
+  const { email, password } = request.body;
+
+  // check if user exists with email
+  const existingUser = await User.findOne(email);
+  // if user is not found, stop login process, return error to user
+  if (!existingUser.length) return response.status(422).send('Error: incorrect email or password');
+
+  // if user does exist, compare passwords
+  const validPassword = await bcrypt.compare(password, existingUser[0].password);
+  if (!validPassword) return response.status(422).send('Error: incorrect email or password');
+
+  // user exists & password is valid - create JWT
+  const token = jwt.sign({ _id: existingUser[0].id }, process.env.JWT_SECRET);
+
+  response.cookie('Authorization', token, { httpOnly: true });
+  response.sendStatus(200);
+});
+
+// path - /api/user/logout
+router.post('/logout', async (request, response) => {
+  // handle logout of user
+  // blacklist token 
+  response.sendStatus(200);
 });
 
 module.exports = router;
