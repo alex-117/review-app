@@ -1,17 +1,18 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const app = express();
 const PORT = process.env.PORT || 3030;
 
 dotenv.config();
-const connection = require('./config/connection');
 
-app.get('/', (request, response) => {
-  console.log("hit the root route");
-  response.send("Hello World");
-});
+// Middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
-const routes = require('./controllers');
-app.use(routes);
+// use routes last so all middleware can be set up first
+app.use(require('./controllers'));
 
 app.listen(PORT, () => console.log('App running on PORT: ', PORT));
