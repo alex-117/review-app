@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const jwtVerification = require('../../middleware/jwt-verification');
 const User = require('../../models/User');
+const JWT_Blacklist = require('../../models/JWT_Blacklist');
 
 // register
 // path - /api/user/register
@@ -29,9 +30,12 @@ router.post('/register', async (request, response) => {
   };
 
   try {
+    // attempt to create use
     const newUser = await User.create(userData);
+    // if creation successful - create jwt
     const token = jwt.sign({ _id: newUser.insertId }, process.env.JWT_SECRET);
     
+    // attach auth cookie to response
     response.cookie('Authorization', token, { httpOnly: true });
     response.sendStatus(200);
   } catch (error) {
@@ -56,6 +60,7 @@ router.post('/login', async (request, response) => {
   // user exists & password is valid - create JWT
   const token = jwt.sign({ _id: existingUser[0].id }, process.env.JWT_SECRET);
 
+  // attach auth cookie to response
   response.cookie('Authorization', token, { httpOnly: true });
   response.sendStatus(200);
 });
@@ -63,7 +68,9 @@ router.post('/login', async (request, response) => {
 // path - /api/user/logout
 router.post('/logout', async (request, response) => {
   // handle logout of user
-  // blacklist token 
+  // blacklist token
+  await JWT_Blacklist.add(request.cookies.Authorization);
+  // redirect to login page
   response.sendStatus(200);
 });
 
