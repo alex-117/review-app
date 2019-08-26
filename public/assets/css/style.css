@@ -1,0 +1,154 @@
+/* SETUP */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: "Raleway", sans-serif;
+  height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+}
+
+/* ~~~ Helpers ~~~ */
+/* button */
+.button {
+  border: 1px solid;
+  border-radius: 25px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+}
+
+.button--dark {
+  background-color: #000;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.button--dark:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+.button--large {
+  font-size: 22px;
+  font-weight: 300;
+  padding: 8px;
+  width: 85%;
+}
+
+.button--icon {
+  border: none;
+  background: transparent;
+  margin: 0;
+}
+
+/* font/text */
+.text--uppercase {
+  text-transform: uppercase
+}
+
+/* flex */
+.flex {
+  display: flex;
+}
+
+.flex--column {
+  flex-direction: column;
+}
+
+.flex-1 {
+  flex-grow: 1;
+}
+/* ~~~ end helpers ~~~ */
+
+/* Splash */
+.Splash {
+  margin: 75px auto;
+  padding: 0 30px;
+  max-width: 720px;
+}
+
+.Splash__header {
+  text-align: center;
+}
+
+.Splash__form {
+  margin: 75px 0;
+}
+
+/* Register */
+.Register {
+  margin: 75px auto;
+  padding: 0 30px;
+  max-width: 720px;
+}
+
+.Register__header {
+  text-align: center;
+}
+
+.Register__form {
+  margin: 75px 0;
+}
+
+/* Form */
+.Form__field {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+}
+
+.Form__label {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.Form__icon {
+  border: 2px solid;
+  border-radius: 100%;
+  padding: 3px;
+}
+
+.Form__input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid;
+  flex-grow: 1;
+  font-size: 18px;
+  padding-left: 15px;
+}
+
+.Form--flex {
+  display: flex;
+  width: 100%;
+}
+
+.Form__error {
+  color: #f00;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 5px;
+  text-align: center;
+}
+
+/* NoAccount */
+.NoAccount {
+  text-align: center;
+}
+
+.NoAccount__link {
+  text-decoration: none;
+  color: #000;
+  font-weight: 700;
+}

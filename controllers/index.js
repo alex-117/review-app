@@ -1,9 +1,13 @@
 // modules
 const router = require('express').Router();
 const apiRoutes = require('./api');
+const staticRoutes = require('./static');
 
 // declare our routes
-// /api
+// API Routes
 router.use('/api', apiRoutes);
+
+// Static Routes
+router.use('/', staticRoutes);
 
 module.exports = router;

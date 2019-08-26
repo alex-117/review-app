@@ -11,6 +11,7 @@ const JWT_Blacklist = require('../../models/JWT_Blacklist');
 router.post('/register', async (request, response) => {
   // request data
   const { first_name, last_name, email, password } = request.body;
+  console.log("TCL: request.body", request.body)
 
   // check for existing user with email
   const existingUser = await User.findOne(email);

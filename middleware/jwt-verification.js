@@ -25,9 +25,9 @@ const jwtVerification = async (request, response, next) => {
     // if token verification fails, set the session user to null
     request.user = null;
     console.error('Invalid Token');
+    
     // redirect user to login page
-    response.send('Invalid Token');
-    // return response.status(401).render('index');
+    return response.status(401).render('index');
   }
 };
 
